@@ -1,48 +1,45 @@
 package com.kuch.Fooddelivery.controller;
 
+import com.kuch.Fooddelivery.api.UserApi;
+import com.kuch.Fooddelivery.controller.assembler.UserAssembler;
+import com.kuch.Fooddelivery.controller.model.UserModel;
 import com.kuch.Fooddelivery.dto.UserDto;
-import com.kuch.Fooddelivery.dto.group.OnCreate;
-import com.kuch.Fooddelivery.dto.group.OnUpdate;
 import com.kuch.Fooddelivery.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Artur Kuch
  */
 @RestController
-@RequestMapping("/users")
 @RequiredArgsConstructor
-public class UserController {
+public class UserController implements UserApi {
 
     private final UserService userService;
+    private final UserAssembler userAssembler;
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{userId}")
-    public UserDto getUser(@PathVariable int userId){
-        return userService.getUser(userId);
+    @Override
+    public UserModel getUser(int userId) {
+        UserDto outUserDto = userService.getUser(userId);
+        return userAssembler.toModel(outUserDto);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
-    public UserDto createUser(@RequestBody @Validated(OnCreate.class) UserDto userDto){
-        return userService.createUser(userDto);
+    @Override
+    public UserModel createUser(UserDto userDto) {
+        UserDto outUserDto = userService.createUser(userDto);
+        return userAssembler.toModel(outUserDto);
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/{userId}")
-    public UserDto updateUser(@PathVariable int userId,
-                              @RequestBody @Validated(OnUpdate.class) UserDto userDto){
-        return userService.updateUser(userId, userDto);
+    @Override
+    public UserModel updateUser(int userId, UserDto userDto) {
+        UserDto outUserDto = userService.updateUser(userId, userDto);
+        return userAssembler.toModel(outUserDto);
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable int userId){
+    @Override
+    public ResponseEntity<Void> deleteUser(int userId) {
         userService.deleteUser(userId);
         return ResponseEntity.noContent().build();
     }
-
 }
