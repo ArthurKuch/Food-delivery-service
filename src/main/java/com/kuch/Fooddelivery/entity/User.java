@@ -1,6 +1,5 @@
 package com.kuch.Fooddelivery.entity;
 
-import com.kuch.Fooddelivery.entity.enumeration.Role;
 import lombok.*;
 
 /**
@@ -21,7 +20,7 @@ public class User {
     private String lastname;
     private String email;
     private String password;
-    private String address;
+    private String phone;
 //    private Role role;
 
 }

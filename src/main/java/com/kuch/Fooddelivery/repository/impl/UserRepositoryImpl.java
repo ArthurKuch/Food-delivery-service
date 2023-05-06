@@ -2,6 +2,7 @@ package com.kuch.Fooddelivery.repository.impl;
 
 import com.kuch.Fooddelivery.entity.User;
 import com.kuch.Fooddelivery.repository.UserRepository;
+import com.kuch.Fooddelivery.service.exception.UserNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class UserRepositoryImpl implements UserRepository {
         return userList.stream()
                 .filter(user-> user.getUserId() == userId)
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Override
@@ -36,7 +37,7 @@ public class UserRepositoryImpl implements UserRepository {
         if(isDeleted){
             userList.add(user);
         }else{
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException();
         }
 
         return user;

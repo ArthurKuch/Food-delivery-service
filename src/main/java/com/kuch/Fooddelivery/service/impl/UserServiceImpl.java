@@ -37,6 +37,10 @@ public class UserServiceImpl implements UserService {
     public UserDto updateUser(int userId, UserDto userDto) {
         log.info("updateUser with id {}", userId);
         User user = mapUserDtoToUser(userDto);
+
+        User oldUser = userRepository.getUser(userId);
+        user.setPhone(oldUser.getPhone());
+
         user = userRepository.updateUser(userId, user);
         return mapUserToUserDto(user);
     }
@@ -54,7 +58,7 @@ public class UserServiceImpl implements UserService {
                 .lastname(user.getLastname())
                 .email(user.getEmail())
                 .password(user.getPassword())
-                .address(user.getAddress())
+                .phone(user.getPhone())
                 .build();
     }
 
@@ -65,7 +69,7 @@ public class UserServiceImpl implements UserService {
                 .lastname(userDto.getLastname())
                 .email(userDto.getEmail())
                 .password(userDto.getPassword())
-                .address(userDto.getAddress())
+                .phone(userDto.getPhone())
                 .build();
     }
 

@@ -1,10 +1,13 @@
 package com.kuch.Fooddelivery.controller;
 
 import com.kuch.Fooddelivery.dto.UserDto;
+import com.kuch.Fooddelivery.dto.group.OnCreate;
+import com.kuch.Fooddelivery.dto.group.OnUpdate;
 import com.kuch.Fooddelivery.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -25,13 +28,14 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public UserDto createUser(@RequestBody UserDto userDto){
+    public UserDto createUser(@RequestBody @Validated(OnCreate.class) UserDto userDto){
         return userService.createUser(userDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{userId}")
-    public UserDto updateUser(@PathVariable int userId, @RequestBody UserDto userDto){
+    public UserDto updateUser(@PathVariable int userId,
+                              @RequestBody @Validated(OnUpdate.class) UserDto userDto){
         return userService.updateUser(userId, userDto);
     }
 
