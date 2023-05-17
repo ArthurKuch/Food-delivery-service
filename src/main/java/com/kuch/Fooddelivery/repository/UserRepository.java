@@ -1,18 +1,13 @@
 package com.kuch.Fooddelivery.repository;
 
 import com.kuch.Fooddelivery.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Artur Kuch
  */
-public interface UserRepository {
-
-    User getUser(int userId);
-
-    User createUser(User user);
-
-    User updateUser(int userId, User user);
-
-    void deleteUser(int userId);
+@Repository
+public interface UserRepository  extends JpaRepository<User, Integer> {
 
 }
