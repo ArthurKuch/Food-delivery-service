@@ -5,6 +5,8 @@ import com.kuch.Fooddelivery.entity.User;
 import com.kuch.Fooddelivery.repository.UserRepository;
 import com.kuch.Fooddelivery.service.UserService;
 import com.kuch.Fooddelivery.service.exception.UserNotFoundException;
+import com.kuch.Fooddelivery.utils.mappers.UserMapper;
+import fr.xebia.extras.selma.Selma;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import java.util.Objects;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper = Selma.getMapper(UserMapper.class);
 
     @Override
     public UserDto getUser(int userId) {
@@ -27,17 +30,18 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
         log.info("User with id {} is found", userId);
-
-        return mapUserToUserDto(user);
+        return userMapper.asUserDto(user);
     }
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        log.info("create user with id {}", userDto.getId());
-        User user = mapUserDtoToUser(userDto);
-        user = userRepository.save(user);
+        User user = userMapper.asUser(userDto);
 
-        return mapUserToUserDto(user);
+        user = userRepository.save(user);
+        log.info("User with id: {} created", user.getUserId());
+
+        userDto.setId(user.getUserId());
+        return userDto;
     }
 
     @Override
@@ -48,13 +52,13 @@ public class UserServiceImpl implements UserService {
                 orElseThrow(UserNotFoundException::new);
 
 
-        existedUser = updateUserWithNonNullFields(existedUser, userDto);
+        updateUserWithNonNullFields(existedUser, userDto);
 
         User upUser = userRepository.save(existedUser);
 
         log.info("User with {} id updated", userId);
 
-        return mapUserToUserDto(upUser);
+        return userMapper.asUserDto(upUser);
     }
 
     @Override
@@ -68,42 +72,12 @@ public class UserServiceImpl implements UserService {
         log.info("User with {} id deleted", userId);
     }
 
-    /*
-      Method just for implementation.
-      Will be removed after modelMapper impl.
-   */
-    private UserDto mapUserToUserDto(User user){
-        return UserDto.builder()
-                .id(user.getUserId())
-                .firstname(user.getFirstname())
-                .lastname(user.getLastname())
-                .email(user.getEmail())
-                .password(user.getPassword())
-                .phone(user.getPhone())
-                .build();
-    }
 
     /*
         Method just for implementation.
-        Will be removed after modelMapper impl.
-    */
-    private User mapUserDtoToUser(UserDto userDto){
-        return User.builder()
-                .userId(userDto.getId())
-                .firstname(userDto.getFirstname())
-                .lastname(userDto.getLastname())
-                .email(userDto.getEmail())
-                .password(userDto.getPassword())
-                .phone(userDto.getPhone())
-                .build();
-    }
-
-
-    /*
-        Method just for implementation.
-        Will be removed after modelMapper impl.
+        Need to fix that piece of code
      */
-    private User updateUserWithNonNullFields(User user, UserDto userDto){
+    private void updateUserWithNonNullFields(User user, UserDto userDto){
         String firstName = userDto.getFirstname();
         String lastName = userDto.getLastname();
         String email = userDto.getEmail();
@@ -121,7 +95,6 @@ public class UserServiceImpl implements UserService {
         if(Objects.nonNull(phone))
             user.setPhone(phone);
 
-        return user;
     }
 
 }

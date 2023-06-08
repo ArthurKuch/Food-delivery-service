@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.kuch.Fooddelivery.dto.group.OnCreate;
 import com.kuch.Fooddelivery.dto.group.OnUpdate;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +14,8 @@ import javax.validation.constraints.Null;
  * @author Artur Kuch
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @JsonInclude(Include.NON_NULL)
 public class UserDto {
