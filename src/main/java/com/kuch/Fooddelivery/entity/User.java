@@ -15,13 +15,17 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "user")
+@Table(name = "User")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int userId;
+
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "inventory_id")
+    private Inventory inventory;
 
     @Column(name = "first_name")
     private String firstname;
@@ -37,6 +41,7 @@ public class User {
 
     @Column(name = "phone_number")
     private String phone;
+
 
 
 }
