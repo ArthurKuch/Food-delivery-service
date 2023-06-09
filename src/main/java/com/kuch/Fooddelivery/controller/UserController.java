@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @author Artur Kuch
  */
@@ -23,6 +25,14 @@ public class UserController implements UserApi {
     public UserModel getUser(int userId) {
         UserDto outUserDto = userService.getUser(userId);
         return userAssembler.toModel(outUserDto);
+    }
+
+    @Override
+    public List<UserModel> getUsers() {
+        List<UserDto> userDtos = userService.getAllUsers();
+
+        return userDtos.stream().map(userAssembler::toModel)
+                .toList();
     }
 
     @Override

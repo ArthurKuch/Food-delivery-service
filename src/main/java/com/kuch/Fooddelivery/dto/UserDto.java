@@ -17,6 +17,8 @@ import javax.validation.constraints.Null;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 @JsonInclude(Include.NON_NULL)
 public class UserDto {
 

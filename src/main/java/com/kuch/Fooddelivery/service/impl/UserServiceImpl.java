@@ -11,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author Artur Kuch
@@ -31,6 +33,16 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(UserNotFoundException::new);
         log.info("User with id {} is found", userId);
         return userMapper.asUserDto(user);
+    }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        log.info("Getting all users");
+        List<User> users = userRepository.findAll();
+
+        List<UserDto> userDtos = users.stream().map(userMapper::asUserDto).toList();
+
+        return userDtos;
     }
 
     @Override

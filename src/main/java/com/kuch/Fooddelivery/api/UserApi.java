@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Api(tags = "User management API")
 @RequestMapping("/api/v1/users")
 public interface UserApi {
@@ -24,6 +26,11 @@ public interface UserApi {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{userId}")
     UserModel getUser(@PathVariable int userId);
+
+    @ApiOperation("Get all users")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    List<UserModel> getUsers();
 
     @ApiOperation("Create user")
     @ResponseStatus(HttpStatus.CREATED)

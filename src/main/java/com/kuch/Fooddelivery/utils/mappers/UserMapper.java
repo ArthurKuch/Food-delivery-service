@@ -10,7 +10,7 @@ import fr.xebia.extras.selma.Mapper;
  */
 
 @Mapper( withCustomFields = {
-        @Field({"userId","id"})
+        @Field({"User.userId","id"})
 })
 public interface UserMapper {
 
