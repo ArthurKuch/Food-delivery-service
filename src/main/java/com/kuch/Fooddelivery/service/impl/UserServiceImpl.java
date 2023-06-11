@@ -1,7 +1,9 @@
 package com.kuch.Fooddelivery.service.impl;
 
 import com.kuch.Fooddelivery.dto.UserDto;
+import com.kuch.Fooddelivery.entity.Inventory;
 import com.kuch.Fooddelivery.entity.User;
+import com.kuch.Fooddelivery.repository.InventoryRepository;
 import com.kuch.Fooddelivery.repository.UserRepository;
 import com.kuch.Fooddelivery.service.UserService;
 import com.kuch.Fooddelivery.service.exception.UserNotFoundException;
@@ -13,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * @author Artur Kuch
@@ -24,6 +25,8 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final InventoryRepository inventoryRepository;
+
     private final UserMapper userMapper = Selma.getMapper(UserMapper.class);
 
     @Override
@@ -49,6 +52,10 @@ public class UserServiceImpl implements UserService {
     public UserDto createUser(UserDto userDto) {
         User user = userMapper.asUser(userDto);
 
+        Inventory inventory = new Inventory();
+        inventoryRepository.save(inventory);
+
+        user.setInventory(inventory);
         user = userRepository.save(user);
         log.info("User with id: {} created", user.getUserId());
 

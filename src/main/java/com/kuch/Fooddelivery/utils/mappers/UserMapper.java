@@ -11,7 +11,7 @@ import fr.xebia.extras.selma.Mapper;
 
 @Mapper( withCustomFields = {
         @Field({"User.userId","id"})
-})
+}, withIgnoreFields = "User.inventory")
 public interface UserMapper {
 
 
