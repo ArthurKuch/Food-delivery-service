@@ -1,8 +1,10 @@
 package com.kuch.Fooddelivery.service.impl;
 
 import com.kuch.Fooddelivery.dto.UserDto;
+import com.kuch.Fooddelivery.entity.Food;
 import com.kuch.Fooddelivery.entity.Inventory;
 import com.kuch.Fooddelivery.entity.User;
+import com.kuch.Fooddelivery.repository.FoodRepostiory;
 import com.kuch.Fooddelivery.repository.InventoryRepository;
 import com.kuch.Fooddelivery.repository.UserRepository;
 import com.kuch.Fooddelivery.service.UserService;
@@ -26,6 +28,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final InventoryRepository inventoryRepository;
+    private final FoodRepostiory foodRepostiory;
 
     private final UserMapper userMapper = Selma.getMapper(UserMapper.class);
 
@@ -52,12 +55,20 @@ public class UserServiceImpl implements UserService {
     public UserDto createUser(UserDto userDto) {
         User user = userMapper.asUser(userDto);
 
-        Inventory inventory = new Inventory();
-        inventoryRepository.save(inventory);
-
-        user.setInventory(inventory);
         user = userRepository.save(user);
         log.info("User with id: {} created", user.getUserId());
+
+        Inventory inventory = new Inventory();
+
+        inventory.setUser(user);
+
+        inventoryRepository.save(inventory);
+
+        log.info("Inventory with id: {} created", inventory.getInventoryId());
+
+        user.setInventory(inventory);
+
+        user = userRepository.save(user);
 
         userDto.setId(user.getUserId());
         return userDto;

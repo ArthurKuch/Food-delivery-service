@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "User")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -23,8 +23,7 @@ public class User {
     @Column(name = "user_id")
     private int userId;
 
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "inventory_id")
+    @OneToOne(optional = false, cascade = CascadeType.ALL, mappedBy = "user")
     private Inventory inventory;
 
     @Column(name = "first_name")

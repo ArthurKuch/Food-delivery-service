@@ -3,6 +3,7 @@ package com.kuch.Fooddelivery.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "Inventory")
+@Table(name = "inventory")
 public class Inventory {
 
     @Id
@@ -26,12 +27,12 @@ public class Inventory {
     private int inventoryId;
 
 
-    @OneToOne(optional = false, mappedBy = "inventory")
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany
-    @JoinColumn(name = "food_id")
-    private List<Food> usersFoods;
+    @Column(name = "total_price")
+    private double total;
+
 
 }

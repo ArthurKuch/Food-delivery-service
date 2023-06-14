@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "Food")
+@Table(name = "Foods")
 public class Food {
 
     @Id
@@ -31,4 +31,6 @@ public class Food {
 
     @Column(name = "price")
     private double price;
+
+
 }
