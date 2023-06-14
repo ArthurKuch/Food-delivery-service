@@ -3,6 +3,7 @@ package com.kuch.Fooddelivery.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author Artur Kuch
@@ -16,14 +17,15 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int userId;
 
-    @OneToOne(optional = false, cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private Inventory inventory;
 
     @Column(name = "first_name")

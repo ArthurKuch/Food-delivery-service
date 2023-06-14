@@ -1,7 +1,6 @@
 package com.kuch.Fooddelivery.service.impl;
 
 import com.kuch.Fooddelivery.dto.UserDto;
-import com.kuch.Fooddelivery.entity.Food;
 import com.kuch.Fooddelivery.entity.Inventory;
 import com.kuch.Fooddelivery.entity.User;
 import com.kuch.Fooddelivery.repository.FoodRepostiory;
@@ -76,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(int userId, UserDto userDto) {
-        log.info("updateUser with id {}", userId);
+        log.info("Update User with id {}", userId);
 
         User existedUser = userRepository.findById(userId).
                 orElseThrow(UserNotFoundException::new);
@@ -93,7 +92,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(int userId) {
-        log.info("deleteUser with id {}", userId);
+        log.info("Delete User with id {}", userId);
 
         User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);

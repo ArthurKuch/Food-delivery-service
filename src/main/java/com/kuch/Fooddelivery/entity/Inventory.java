@@ -22,14 +22,22 @@ import java.util.List;
 public class Inventory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "inventory_id")
     private int inventoryId;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "inventory_id", referencedColumnName = "user_id")
     private User user;
+
+    @OneToMany(
+            mappedBy = "inventory",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<InventoryItems> inventoryItems = new ArrayList<>();
+
 
     @Column(name = "total_price")
     private double total;
