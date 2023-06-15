@@ -14,7 +14,7 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FoodDto {
 
-    private int foodId;
+    private int id;
 
     private String name;
 
@@ -23,12 +23,12 @@ public class FoodDto {
     private double price;
 
 
-    public int getFoodId() {
-        return foodId;
+    public int getId() {
+        return id;
     }
 
-    public void setFoodId(int foodId) {
-        this.foodId = foodId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -27,10 +27,10 @@ public class FoodAssembler extends RepresentationModelAssemblerSupport<FoodDto, 
     public FoodModel toModel(FoodDto entity) {
         FoodModel foodModel = new FoodModel(entity);
 
-        Link get = linkTo(methodOn(FoodController.class).getFood(entity.getFoodId())).withRel(GET_REL);
+        Link get = linkTo(methodOn(FoodController.class).getFood(entity.getId())).withRel(GET_REL);
         Link create = linkTo(methodOn(FoodController.class).createFood(entity)).withRel(CREATE_REL);
-        Link update = linkTo(methodOn(FoodController.class).updateFood(entity.getFoodId(), entity)).withRel(UPDATE_REL);
-        Link delete = linkTo(methodOn(FoodController.class).deleteFood(entity.getFoodId())).withRel(DELETE_REL);
+        Link update = linkTo(methodOn(FoodController.class).updateFood(entity.getId(), entity)).withRel(UPDATE_REL);
+        Link delete = linkTo(methodOn(FoodController.class).deleteFood(entity.getId())).withRel(DELETE_REL);
 
         foodModel.add(get, create, update, delete);
 

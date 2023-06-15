@@ -51,8 +51,8 @@ public class FoodServiceImpl implements FoodService {
         Food food = foodMapper.asFood(foodDto);
         food = foodRepostiory.save(food);
         log.info("Food with id {} created", food.getFoodId());
-
-        foodDto.setFoodId(food.getFoodId());
+        log.info("Food: {}", foodMapper.asFoodDto(food));
+        foodDto.setId(food.getFoodId());
 
         return foodDto;
     }
@@ -69,7 +69,7 @@ public class FoodServiceImpl implements FoodService {
         Food upFood = foodRepostiory.save(existedFood);
 
         log.info("Food with {} id updated", foodId);
-
+        log.info("Food: {}", foodMapper.asFoodDto(upFood));
         return foodMapper.asFoodDto(upFood);
     }
 

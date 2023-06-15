@@ -41,14 +41,14 @@ public class FoodController implements FoodApi {
     public FoodModel createFood(FoodDto foodDto) {
         FoodDto outFoodDto = foodService.createFood(foodDto);
 
-        return foodAssembler.toModel(foodDto);
+        return foodAssembler.toModel(outFoodDto);
     }
 
     @Override
     public FoodModel updateFood(int foodId, FoodDto foodDto) {
         FoodDto updated = foodService.updateFood(foodId, foodDto);
 
-        return foodAssembler.toModel(foodDto);
+        return foodAssembler.toModel(updated);
     }
 
     @Override
