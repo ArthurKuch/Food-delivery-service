@@ -21,4 +21,9 @@ public class InventoryDto {
 
     private List<FoodDto> usersFoods;
 
+    private int quantity;
+
+    private double total;
+
+
 }
