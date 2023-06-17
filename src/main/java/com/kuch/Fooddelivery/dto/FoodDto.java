@@ -22,6 +22,8 @@ public class FoodDto {
 
     private double price;
 
+    private int quantity;
+
 
     public int getId() {
         return id;

@@ -9,7 +9,8 @@ import java.io.Serializable;
  * @author Artur Kuch
  */
 
-@Data
+@EqualsAndHashCode
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -30,6 +31,9 @@ public class Food implements Serializable {
 
     @Column(name = "price")
     private double price;
+
+    @Column(name = "quantity")
+    private int quantity;
 
     public int getFoodId() {
         return foodId;

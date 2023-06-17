@@ -52,4 +52,6 @@ public class UserController implements UserApi {
         userService.deleteUser(userId);
         return ResponseEntity.noContent().build();
     }
+
+
 }

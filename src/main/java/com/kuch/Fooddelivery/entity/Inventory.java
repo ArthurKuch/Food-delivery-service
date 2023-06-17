@@ -4,7 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Artur Kuch
@@ -16,31 +18,55 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Getter
-@Setter
 @Table(name = "inventory")
 public class Inventory {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "inventory_id")
     private int inventoryId;
 
 
     @OneToOne
-    @MapsId
-    @JoinColumn(name = "inventory_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
-    @OneToMany(
-            mappedBy = "inventory",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<InventoryItems> inventoryItems = new ArrayList<>();
+    @OneToMany
+    private Set<Food> usersFood = new HashSet<>();
 
 
     @Column(name = "total_price")
     private double total;
 
+    public int getInventoryId() {
+        return inventoryId;
+    }
 
+    public void setInventoryId(int inventoryId) {
+        this.inventoryId = inventoryId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Food> getUsersFood() {
+        return usersFood;
+    }
+
+    public void setUsersFood(Set<Food> usersFood) {
+        this.usersFood = usersFood;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
 }

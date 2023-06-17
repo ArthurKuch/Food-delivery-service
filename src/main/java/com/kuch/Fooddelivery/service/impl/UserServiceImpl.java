@@ -27,7 +27,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final InventoryRepository inventoryRepository;
-    private final FoodRepostiory foodRepostiory;
 
     private final UserMapper userMapper = Selma.getMapper(UserMapper.class);
 
@@ -57,11 +56,9 @@ public class UserServiceImpl implements UserService {
         user = userRepository.save(user);
         log.info("User with id: {} created", user.getUserId());
 
-        Inventory inventory = new Inventory();
+        Inventory inventory = inventoryRepository.save(new Inventory());
 
         inventory.setUser(user);
-
-        inventoryRepository.save(inventory);
 
         log.info("Inventory with id: {} created", inventory.getInventoryId());
 
@@ -103,9 +100,9 @@ public class UserServiceImpl implements UserService {
 
 
     /*
-        Method just for implementation.
-        Need to fix that piece of code
-     */
+            Method just for implementation.
+            Need to fix that piece of code
+         */
     private void updateUserWithNonNullFields(User user, UserDto userDto){
         String firstName = userDto.getFirstname();
         String lastName = userDto.getLastname();

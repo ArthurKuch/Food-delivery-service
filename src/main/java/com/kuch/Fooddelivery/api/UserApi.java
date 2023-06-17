@@ -54,4 +54,5 @@ public interface UserApi {
     @DeleteMapping("/{userId}")
     ResponseEntity<Void> deleteUser(@PathVariable int userId);
 
+
 }
