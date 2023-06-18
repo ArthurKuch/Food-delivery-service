@@ -1,6 +1,5 @@
 package com.kuch.Fooddelivery.service.impl;
 
-import com.kuch.Fooddelivery.dto.FoodDto;
 import com.kuch.Fooddelivery.dto.InventoryDto;
 import com.kuch.Fooddelivery.entity.Food;
 import com.kuch.Fooddelivery.entity.Inventory;
@@ -16,8 +15,6 @@ import fr.xebia.extras.selma.Selma;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
 
 /**
  * @author Artur Kuch
@@ -47,14 +44,12 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public InventoryDto addFood(int inventoryId, int foodId) {
-        Inventory inventory = inventoryRepository.findById(inventoryId)
-                .orElseThrow(InventoryNotFoundException::new);
+        Inventory inventory = getInventoryByInventoryId(inventoryId);
 
         Food food = foodRepostiory.findById(foodId)
                         .orElseThrow(FoodNotFoundException::new);
 
-        Set<Food> foods = inventory.getUsersFood();
-        foods.add(food);
+        inventory.getUsersFood().add(food);
 
         inventoryRepository.save(inventory);
 
@@ -64,11 +59,33 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public InventoryDto removeFood(int inventoryId, int foodId) {
-        return null;
+
+        Inventory inventory = getInventoryByInventoryId(inventoryId);
+
+        Food food = foodRepostiory.findById(foodId)
+                .orElseThrow(FoodNotFoundException::new);
+
+        inventory.getUsersFood().remove(food);
+
+        inventoryRepository.save(inventory);
+
+        return inventoryMapper.asInventoryDto(inventory);
     }
 
     @Override
     public InventoryDto clearInventory(int inventoryId) {
-        return null;
+        Inventory inventory = getInventoryByInventoryId(inventoryId);
+
+        inventory.getUsersFood().clear();
+
+        inventoryRepository.save(inventory);
+
+
+        return inventoryMapper.asInventoryDto(inventory);
+    }
+
+    private Inventory getInventoryByInventoryId(int inventoryId) {
+        return inventoryRepository.findById(inventoryId)
+                .orElseThrow(InventoryNotFoundException::new);
     }
 }

@@ -32,4 +32,18 @@ public class InventoryController implements InventoryApi {
 
         return inventoryAssembler.toModel(inventoryDto);
     }
+
+    @Override
+    public InventoryModel removeFoodFromInventory(int inventoryId, int foodId) {
+        InventoryDto inventoryDto = inventoryService.removeFood(inventoryId, foodId);
+
+        return inventoryAssembler.toModel(inventoryDto);
+    }
+
+    @Override
+    public InventoryModel clearInventory(int inventoryId) {
+        InventoryDto inventoryDto = inventoryService.clearInventory(inventoryId);
+
+        return inventoryAssembler.toModel(inventoryDto);
+    }
 }

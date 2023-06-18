@@ -35,4 +35,27 @@ public interface InventoryApi {
     @PutMapping("{inventoryId}/add-foods/{foodId}")
     InventoryModel addFoodToInventory(@PathVariable int inventoryId, @PathVariable int foodId);
 
+
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(name = "inventoryId", paramType = "path", required = true, value = "User id"),
+                    @ApiImplicitParam(name = "foodId", paramType = "path", required = true, value = "User id")
+            })
+    @ApiOperation("Remove food from inventory")
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("{inventoryId}/remove-foods/{foodId}")
+    InventoryModel removeFoodFromInventory(@PathVariable int inventoryId, @PathVariable int foodId);
+
+
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(name = "inventoryId", paramType = "path", required = true, value = "User id"),
+            })
+    @ApiOperation("Clear inventory")
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("{inventoryId}/clear-all")
+    InventoryModel clearInventory(@PathVariable int inventoryId);
+
+
+
 }
