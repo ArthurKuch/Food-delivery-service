@@ -1,11 +1,13 @@
 package com.kuch.Fooddelivery.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -21,27 +23,27 @@ public class InventoryDto implements Serializable {
 
     private double total;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Set<FoodDto> getUsersFood() {
-        return usersFood;
-    }
-
-    public void setUsersFood(Set<FoodDto> usersFood) {
-        this.usersFood = usersFood;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
+//
+//    public Set<FoodDto> getUsersFood() {
+//        return usersFood;
+//    }
+//
+//    public void setUsersFood(Set<FoodDto> usersFood) {
+//        this.usersFood = usersFood;
+//    }
+//
+//    public double getTotal() {
+//        return total;
+//    }
+//
+//    public void setTotal(double total) {
+//        this.total = total;
+//    }
 }

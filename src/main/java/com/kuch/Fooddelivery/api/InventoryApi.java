@@ -27,8 +27,8 @@ public interface InventoryApi {
 
     @ApiImplicitParams(
             {
-                    @ApiImplicitParam(name = "inventoryId", paramType = "path", required = true, value = "User id"),
-                    @ApiImplicitParam(name = "foodId", paramType = "path", required = true, value = "User id")
+                    @ApiImplicitParam(name = "inventoryId", paramType = "path", required = true, value = "Inventory id"),
+                    @ApiImplicitParam(name = "foodId", paramType = "path", required = true, value = "Food id")
             })
     @ApiOperation("Add food to inventory")
     @ResponseStatus(HttpStatus.OK)
@@ -38,8 +38,8 @@ public interface InventoryApi {
 
     @ApiImplicitParams(
             {
-                    @ApiImplicitParam(name = "inventoryId", paramType = "path", required = true, value = "User id"),
-                    @ApiImplicitParam(name = "foodId", paramType = "path", required = true, value = "User id")
+                    @ApiImplicitParam(name = "inventoryId", paramType = "path", required = true, value = "Inventory id"),
+                    @ApiImplicitParam(name = "foodId", paramType = "path", required = true, value = "Food id")
             })
     @ApiOperation("Remove food from inventory")
     @ResponseStatus(HttpStatus.OK)
@@ -49,7 +49,7 @@ public interface InventoryApi {
 
     @ApiImplicitParams(
             {
-                    @ApiImplicitParam(name = "inventoryId", paramType = "path", required = true, value = "User id"),
+                    @ApiImplicitParam(name = "inventoryId", paramType = "path", required = true, value = "Inventory id"),
             })
     @ApiOperation("Clear inventory")
     @ResponseStatus(HttpStatus.OK)

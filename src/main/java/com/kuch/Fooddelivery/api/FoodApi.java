@@ -2,12 +2,14 @@ package com.kuch.Fooddelivery.api;
 
 import com.kuch.Fooddelivery.controller.model.FoodModel;
 import com.kuch.Fooddelivery.dto.FoodDto;
+import com.kuch.Fooddelivery.dto.group.OnCreate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,7 +37,7 @@ public interface FoodApi {
     @ApiOperation("Create food")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    FoodModel createFood(@RequestBody FoodDto foodDto);
+    FoodModel createFood(@Validated(OnCreate.class) @RequestBody FoodDto foodDto);
 
 
     @ApiImplicitParams({
