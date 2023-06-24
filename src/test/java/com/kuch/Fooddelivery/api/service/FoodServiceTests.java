@@ -4,8 +4,8 @@ import com.kuch.Fooddelivery.api.util.FoodDataTestUtil;
 import com.kuch.Fooddelivery.dto.FoodDto;
 import com.kuch.Fooddelivery.entity.Food;
 import com.kuch.Fooddelivery.repository.FoodRepostiory;
+import com.kuch.Fooddelivery.service.exception.FoodNotFoundException;
 import com.kuch.Fooddelivery.service.impl.FoodServiceImpl;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,6 +17,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 /**
@@ -54,6 +56,13 @@ public class FoodServiceTests {
         FoodDto existed = foodService.getFood(1);
 
         assertThat(existed).isNotNull();
+    }
+
+    @Test
+    public void FoodService_GetFoodById_ThrowsFoodNotFound(){
+        when(foodRepostiory.findById(anyInt())).thenReturn(Optional.empty());
+
+        assertThrows(FoodNotFoundException.class, () -> foodService.getFood(1));
     }
 
     @Test

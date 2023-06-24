@@ -23,27 +23,4 @@ public class InventoryDto implements Serializable {
 
     private double total;
 
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
-//
-//    public Set<FoodDto> getUsersFood() {
-//        return usersFood;
-//    }
-//
-//    public void setUsersFood(Set<FoodDto> usersFood) {
-//        this.usersFood = usersFood;
-//    }
-//
-//    public double getTotal() {
-//        return total;
-//    }
-//
-//    public void setTotal(double total) {
-//        this.total = total;
-//    }
 }

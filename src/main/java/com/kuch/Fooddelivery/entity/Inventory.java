@@ -39,35 +39,5 @@ public class Inventory {
     @Column(name = "total_price")
     private double total;
 
-//    public int getInventoryId() {
-//        return inventoryId;
-//    }
-//
-//    public void setInventoryId(int inventoryId) {
-//        this.inventoryId = inventoryId;
-//    }
-//
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
-//
-//    public Set<Food> getUsersFood() {
-//        return usersFood;
-//    }
-//
-//    public void setUsersFood(Set<Food> usersFood) {
-//        this.usersFood = usersFood;
-//    }
-//
-//    public double getTotal() {
-//        return total;
-//    }
-//
-//    public void setTotal(double total) {
-//        this.total = total;
-//    }
+
 }
