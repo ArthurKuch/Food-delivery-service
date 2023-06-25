@@ -7,7 +7,8 @@ import fr.xebia.extras.selma.Field;
 import fr.xebia.extras.selma.Mapper;
 
 @Mapper(withCustomFields = {
-        @Field({"Food.foodId","id"})})
+        @Field({"Food.foodId", "id"}),
+        @Field({"quantity", "FoodDto.quantity"})})
 public interface FoodMapper {
 
 

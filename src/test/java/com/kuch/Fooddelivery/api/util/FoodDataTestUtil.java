@@ -19,7 +19,7 @@ public class FoodDataTestUtil {
                 .foodId(1)
                 .name("Food")
                 .description("Desc")
-                .price(1.0)
+                .price(2.0)
                 .quantity(1)
                 .build();
 
