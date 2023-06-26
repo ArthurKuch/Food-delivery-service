@@ -9,9 +9,7 @@ import com.kuch.Fooddelivery.repository.UserRepository;
 import com.kuch.Fooddelivery.service.InventoryService;
 import com.kuch.Fooddelivery.service.exception.FoodNotFoundException;
 import com.kuch.Fooddelivery.service.exception.InventoryNotFoundException;
-import com.kuch.Fooddelivery.utils.mappers.FoodMapper;
 import com.kuch.Fooddelivery.utils.mappers.InventoryMapper;
-import fr.xebia.extras.selma.Selma;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,8 +27,6 @@ public class InventoryServiceImpl implements InventoryService {
     private final UserRepository userRepository;
     private final FoodRepostiory foodRepostiory;
 
-    private final InventoryMapper inventoryMapper = Selma.getMapper(InventoryMapper.class);
-    private final FoodMapper mapper = Selma.builder(FoodMapper.class).build();
 
     @Override
     public InventoryDto getInventory(int userId) {
@@ -39,7 +35,7 @@ public class InventoryServiceImpl implements InventoryService {
                 .orElseThrow(InventoryNotFoundException::new).getInventory();
         log.info("Inventory with id {} is found ", existed.getInventoryId());
 
-        return inventoryMapper.asInventoryDto(existed);
+        return InventoryMapper.INSTANCE.asInventoryDto(existed);
     }
 
     @Override
@@ -53,8 +49,7 @@ public class InventoryServiceImpl implements InventoryService {
 
         inventoryRepository.save(inventory);
 
-
-        return inventoryMapper.asInventoryDto(inventory);
+        return InventoryMapper.INSTANCE.asInventoryDto(inventory);
     }
 
     @Override
@@ -69,7 +64,7 @@ public class InventoryServiceImpl implements InventoryService {
 
         inventoryRepository.save(inventory);
 
-        return inventoryMapper.asInventoryDto(inventory);
+        return InventoryMapper.INSTANCE.asInventoryDto(inventory);
     }
 
     @Override
@@ -81,7 +76,7 @@ public class InventoryServiceImpl implements InventoryService {
         inventoryRepository.save(inventory);
 
 
-        return inventoryMapper.asInventoryDto(inventory);
+        return InventoryMapper.INSTANCE.asInventoryDto(inventory);
     }
 
     private Inventory getInventoryByInventoryId(int inventoryId) {

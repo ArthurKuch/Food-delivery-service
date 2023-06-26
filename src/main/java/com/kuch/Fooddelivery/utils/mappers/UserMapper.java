@@ -2,21 +2,24 @@ package com.kuch.Fooddelivery.utils.mappers;
 
 import com.kuch.Fooddelivery.dto.UserDto;
 import com.kuch.Fooddelivery.entity.User;
-import fr.xebia.extras.selma.Field;
-import fr.xebia.extras.selma.Mapper;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author Artur Kuch
  */
 
-@Mapper( withCustomFields = {
-        @Field({"User.userId","id"})
-}, withIgnoreFields = "User.inventory")
+@Mapper
 public interface UserMapper {
 
 
+    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+
+    @Mapping(source = "userId", target = "id")
     UserDto asUserDto(User user);
 
+    @Mapping(source = "id", target = "userId")
     User asUser(UserDto userDto);
 
 }

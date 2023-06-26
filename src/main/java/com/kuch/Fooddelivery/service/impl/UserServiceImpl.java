@@ -3,13 +3,11 @@ package com.kuch.Fooddelivery.service.impl;
 import com.kuch.Fooddelivery.dto.UserDto;
 import com.kuch.Fooddelivery.entity.Inventory;
 import com.kuch.Fooddelivery.entity.User;
-import com.kuch.Fooddelivery.repository.FoodRepostiory;
 import com.kuch.Fooddelivery.repository.InventoryRepository;
 import com.kuch.Fooddelivery.repository.UserRepository;
 import com.kuch.Fooddelivery.service.UserService;
 import com.kuch.Fooddelivery.service.exception.UserNotFoundException;
 import com.kuch.Fooddelivery.utils.mappers.UserMapper;
-import fr.xebia.extras.selma.Selma;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,7 +26,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final InventoryRepository inventoryRepository;
 
-    private final UserMapper userMapper = Selma.getMapper(UserMapper.class);
 
     @Override
     public UserDto getUser(int userId) {
@@ -36,7 +33,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
         log.info("User with id {} is found", userId);
-        return userMapper.asUserDto(user);
+        return UserMapper.INSTANCE.asUserDto(user);
     }
 
     @Override
@@ -44,14 +41,14 @@ public class UserServiceImpl implements UserService {
         log.info("Getting all users");
         List<User> users = userRepository.findAll();
 
-        List<UserDto> userDtos = users.stream().map(userMapper::asUserDto).toList();
+        List<UserDto> userDtos = users.stream().map(UserMapper.INSTANCE::asUserDto).toList();
 
         return userDtos;
     }
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        User user = userMapper.asUser(userDto);
+        User user = UserMapper.INSTANCE.asUser(userDto);
 
         user = userRepository.save(user);
         log.info("User with id: {} created", user.getUserId());
@@ -84,7 +81,7 @@ public class UserServiceImpl implements UserService {
 
         log.info("User with {} id updated", userId);
 
-        return userMapper.asUserDto(upUser);
+        return UserMapper.INSTANCE.asUserDto(upUser);
     }
 
     @Override

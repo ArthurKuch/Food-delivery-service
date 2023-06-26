@@ -6,7 +6,6 @@ import com.kuch.Fooddelivery.repository.FoodRepostiory;
 import com.kuch.Fooddelivery.service.FoodService;
 import com.kuch.Fooddelivery.service.exception.FoodNotFoundException;
 import com.kuch.Fooddelivery.utils.mappers.FoodMapper;
-import fr.xebia.extras.selma.Selma;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ public class FoodServiceImpl implements FoodService {
 
     private final FoodRepostiory foodRepostiory;
 
-    private final FoodMapper foodMapper = Selma.getMapper(FoodMapper.class);
+//    private final FoodMapper foodMapper = FoodMapper.INSTANCE;
 
     @Override
     public FoodDto getFood(int foodId) {
@@ -32,7 +31,8 @@ public class FoodServiceImpl implements FoodService {
 
         log.info("Food with id {} is found", foodId);
 
-        return foodMapper.asFoodDto(food);
+//        return foodMapper.asFoodDto(food);
+        return FoodMapper.INSTANCE.asFoodDto(food);
     }
 
     @Override
@@ -41,17 +41,18 @@ public class FoodServiceImpl implements FoodService {
 
         List<Food> foods = foodRepostiory.findAll();
 
-        List<FoodDto> foodDtos = foods.stream().map(foodMapper::asFoodDto).toList();
+        List<FoodDto> foodDtos = foods.stream().map(FoodMapper.INSTANCE::asFoodDto).toList();
 
         return foodDtos;
     }
 
     @Override
     public FoodDto createFood(FoodDto foodDto) {
-        Food food = foodMapper.asFood(foodDto);
+        Food food = FoodMapper.INSTANCE.asFood(foodDto);
+
         food = foodRepostiory.save(food);
         log.info("Food with id {} created", food.getFoodId());
-        log.info("Food: {}", foodMapper.asFoodDto(food));
+        log.info("Food: {}", FoodMapper.INSTANCE.asFoodDto(food));
         foodDto.setId(food.getFoodId());
 
         return foodDto;
@@ -69,8 +70,8 @@ public class FoodServiceImpl implements FoodService {
         Food upFood = foodRepostiory.save(existedFood);
 
         log.info("Food with {} id updated", foodId);
-        log.info("Food: {}", foodMapper.asFoodDto(upFood));
-        return foodMapper.asFoodDto(upFood);
+        log.info("Food: {}", FoodMapper.INSTANCE.asFoodDto(upFood));
+        return FoodMapper.INSTANCE.asFoodDto(upFood);
     }
 
     @Override
