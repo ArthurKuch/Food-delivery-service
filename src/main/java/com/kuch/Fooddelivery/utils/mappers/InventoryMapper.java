@@ -11,6 +11,7 @@ import org.mapstruct.factory.Mappers;
  * @author Artur Kuch
  */
 @Mapper(uses = {FoodMapper.class})
+
 public interface InventoryMapper {
 
     InventoryMapper INSTANCE = Mappers.getMapper(InventoryMapper.class);

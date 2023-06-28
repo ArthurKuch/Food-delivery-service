@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.kuch.Fooddelivery.dto.group.OnCreate;
 import com.kuch.Fooddelivery.dto.group.OnUpdate;
+import com.kuch.Fooddelivery.entity.Order;
 import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Artur Kuch
@@ -40,6 +42,6 @@ public class UserDto implements Serializable {
     @Null(message = "Phone should be absent in request", groups = OnUpdate.class)
     private String phone;
 
-
+    private List<Order> order;
 
 }
