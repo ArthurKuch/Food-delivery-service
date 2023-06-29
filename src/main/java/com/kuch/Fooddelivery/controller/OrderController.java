@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @author Artur Kuch
  */
@@ -30,17 +32,31 @@ public class OrderController implements OrderApi {
     }
 
     @Override
+    public List<OrderModel> getUserOrders(int userId) {
+        List<OrderModel> orderModels = orderService.getUserOrders(userId).stream()
+                .map(orderAssembler::toModel).toList();
+
+        return orderModels;
+    }
+
+    @Override
     public OrderModel getOrder(int orderId) {
-        return null;
+        OrderDtoResponse response = orderService.getOrder(orderId);
+
+        return orderAssembler.toModel(response);
     }
 
     @Override
     public OrderModel updateOrder(OrderDto orderDto, int orderId) {
-        return null;
+        OrderDtoResponse response = orderService.updateOrder(orderDto, orderId);
+
+        return orderAssembler.toModel(response);
     }
 
     @Override
     public ResponseEntity<Void> deleteOrder(int orderId) {
-        return null;
+        orderService.deleteOrder(orderId);
+
+        return ResponseEntity.noContent().build();
     }
 }

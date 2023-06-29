@@ -4,13 +4,14 @@ import com.kuch.Fooddelivery.dto.UserDto;
 import com.kuch.Fooddelivery.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.NullValueMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
 /**
  * @author Artur Kuch
  */
 
-@Mapper
+@Mapper(nullValueMappingStrategy =  NullValueMappingStrategy.RETURN_DEFAULT)
 public interface UserMapper {
 
 

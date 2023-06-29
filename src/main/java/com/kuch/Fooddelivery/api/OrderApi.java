@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author Artur Kuch
  */
@@ -54,4 +56,13 @@ public interface OrderApi {
     @ApiOperation("Delete order")
     @DeleteMapping("/{orderId}")
     ResponseEntity<Void> deleteOrder(@PathVariable int orderId);
+
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", paramType = "path", required = true, value = "User id")
+    })
+    @ApiOperation("Get all user orders ")
+    @GetMapping("{userId}/orders")
+    List<OrderModel> getUserOrders(@PathVariable int userId);
+
 }

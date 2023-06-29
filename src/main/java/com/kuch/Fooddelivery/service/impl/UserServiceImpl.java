@@ -77,11 +77,11 @@ public class UserServiceImpl implements UserService {
 
         updateUserWithNonNullFields(existedUser, userDto);
 
-        User upUser = userRepository.save(existedUser);
+        userRepository.save(existedUser);
 
         log.info("User with {} id updated", userId);
 
-        return UserMapper.INSTANCE.asUserDto(upUser);
+        return UserMapper.INSTANCE.asUserDto(existedUser);
     }
 
     @Override
