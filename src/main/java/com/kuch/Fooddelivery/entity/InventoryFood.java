@@ -16,6 +16,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "inventoryfoods")
 public class InventoryFood {
 
     @Id

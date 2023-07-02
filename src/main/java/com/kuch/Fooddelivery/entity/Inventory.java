@@ -19,7 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "inventory")
+@Table(name = "inventories")
 public class Inventory {
 
     @Id
