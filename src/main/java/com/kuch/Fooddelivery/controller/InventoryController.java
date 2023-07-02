@@ -27,8 +27,8 @@ public class InventoryController implements InventoryApi {
     }
 
     @Override
-    public InventoryModel addFoodToInventory(int inventoryId, int foodId) {
-        InventoryDto inventoryDto = inventoryService.addFood(inventoryId, foodId);
+    public InventoryModel addFoodToInventory(int inventoryId, int foodId, int quantity) {
+        InventoryDto inventoryDto = inventoryService.addFood(inventoryId, foodId, quantity);
 
         return inventoryAssembler.toModel(inventoryDto);
     }

@@ -1,10 +1,7 @@
 package com.kuch.Fooddelivery.api;
 
 import com.kuch.Fooddelivery.controller.model.InventoryModel;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,12 +25,13 @@ public interface InventoryApi {
     @ApiImplicitParams(
             {
                     @ApiImplicitParam(name = "inventoryId", paramType = "path", required = true, value = "Inventory id"),
-                    @ApiImplicitParam(name = "foodId", paramType = "path", required = true, value = "Food id")
+                    @ApiImplicitParam(name = "foodId", paramType = "path", required = true, value = "Food id"),
+                    @ApiImplicitParam(name = "quantity", paramType = "query", required = true, example = "5", value = "Food quantity")
             })
     @ApiOperation("Add food to inventory")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("{inventoryId}/add-foods/{foodId}")
-    InventoryModel addFoodToInventory(@PathVariable int inventoryId, @PathVariable int foodId);
+    InventoryModel addFoodToInventory(@PathVariable int inventoryId, @PathVariable int foodId, @RequestParam(name = "quantity") int quantity);
 
 
     @ApiImplicitParams(

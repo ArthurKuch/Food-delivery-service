@@ -9,11 +9,12 @@ import com.kuch.Fooddelivery.repository.UserRepository;
 import com.kuch.Fooddelivery.service.OrderService;
 import com.kuch.Fooddelivery.service.exception.OrderNotFoundException;
 import com.kuch.Fooddelivery.service.exception.UserNotFoundException;
-import com.kuch.Fooddelivery.utils.mappers.FoodMapper;
+import com.kuch.Fooddelivery.utils.mappers.InventoryFoodMapper;
 import com.kuch.Fooddelivery.utils.mappers.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,17 +63,19 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
+    @Transactional
     public OrderDtoResponse createOrder(OrderDto orderDto, int userId) {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
 
         Order order = OrderMapper.INSTANCE.asOrder(orderDto);
+        List<Order> orders = user.getOrder();
 
-        List<Order> orders = user.getOrder(); // needs to be implemented with transactions!!!!!!!!
-        orders.add(order);// needs to be implemented with transactions!!!!!!!!
-        user.setOrder(orders);// needs to be implemented with transactions!!!!!!!!
+        orders.add(order);
+        user.setOrder(orders);
         order.setUser(user);
         order.setInventory(user.getInventory());
         order.setTotal(user.getInventory().getTotal());
+
         order = orderRepository.save(order);
         userRepository.save(user);
 
@@ -81,8 +84,9 @@ public class OrderServiceImpl implements OrderService {
         OrderDtoResponse orderDtoResponse = OrderMapper.INSTANCE.asOrderDtoResponse(order);
         orderDtoResponse.setFoodSet(user.getInventory().getUsersFood()
                 .stream()
-                .map(FoodMapper.INSTANCE::asFoodDto)
+                .map(InventoryFoodMapper.INSTANCE::asInventoryFoodDto)
                 .collect(Collectors.toSet()));
+
 
         return orderDtoResponse;
     }

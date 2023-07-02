@@ -32,6 +32,6 @@ public class FoodDto {
     @DecimalMin(value = "1.0", message = "Price should not be less than 1.0", inclusive = false)
     private double price;
 
-    private int quantity;
+//    private int quantity;
 
 }

@@ -1,6 +1,5 @@
 package com.kuch.Fooddelivery.service;
 
-import com.kuch.Fooddelivery.dto.FoodDto;
 import com.kuch.Fooddelivery.dto.InventoryDto;
 
 /**
@@ -10,7 +9,7 @@ public interface InventoryService {
 
     InventoryDto getInventory(int userId);
 
-    InventoryDto addFood(int inventoryId, int foodId);
+    InventoryDto addFood(int inventoryId, int foodId, int quantity);
 
     InventoryDto removeFood(int inventoryId,  int foodId);
 

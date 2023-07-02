@@ -10,8 +10,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * @author Artur Kuch
  */
-@Mapper(uses = {FoodMapper.class})
-
+@Mapper(uses = {InventoryFoodMapper.class})
 public interface InventoryMapper {
 
     InventoryMapper INSTANCE = Mappers.getMapper(InventoryMapper.class);

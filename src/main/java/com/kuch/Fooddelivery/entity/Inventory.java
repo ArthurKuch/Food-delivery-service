@@ -33,7 +33,7 @@ public class Inventory {
     private User user;
 
     @OneToMany
-    private Set<Food> usersFood = new HashSet<>();
+    private Set<InventoryFood> usersFood = new HashSet<>();
 
 
     @Column(name = "total_price")

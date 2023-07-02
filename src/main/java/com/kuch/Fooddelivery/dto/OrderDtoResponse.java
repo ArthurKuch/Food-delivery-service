@@ -28,7 +28,7 @@ public class OrderDtoResponse {
 
     private int streetNumber;
 
-    private Set<FoodDto> foodSet =  new HashSet<>();
+    private Set<InventoryFoodDto> foodSet =  new HashSet<>();
 
     private double total;
 

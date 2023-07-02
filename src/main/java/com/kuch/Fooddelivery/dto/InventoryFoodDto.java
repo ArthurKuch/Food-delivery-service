@@ -6,21 +6,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+/**
+ * @author Artur Kuch
+ */
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class InventoryDto implements Serializable {
+public class InventoryFoodDto {
 
     private int id;
 
-    private Set<InventoryFoodDto> usersFood = new HashSet<>();
+    private double price;
 
-    private double total;
+    private int quantity;
+
+    private FoodDto foodDto;
 
 }
