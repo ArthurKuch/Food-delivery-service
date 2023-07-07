@@ -1,6 +1,7 @@
 package com.kuch.Fooddelivery.service;
 
 import com.kuch.Fooddelivery.dto.UserDto;
+import com.kuch.Fooddelivery.entity.Role;
 
 import java.util.List;
 
@@ -18,5 +19,9 @@ public interface UserService {
     UserDto updateUser(int userId, UserDto userDto);
 
     void deleteUser(int userId);
+
+    Role saveRole(Role role);
+
+    void addRoleToUser(int userId, String roleName);
 
 }

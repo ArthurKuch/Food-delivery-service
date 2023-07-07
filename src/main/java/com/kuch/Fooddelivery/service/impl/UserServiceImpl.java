@@ -2,16 +2,26 @@ package com.kuch.Fooddelivery.service.impl;
 
 import com.kuch.Fooddelivery.dto.UserDto;
 import com.kuch.Fooddelivery.entity.Inventory;
+import com.kuch.Fooddelivery.entity.Role;
 import com.kuch.Fooddelivery.entity.User;
 import com.kuch.Fooddelivery.repository.InventoryRepository;
+import com.kuch.Fooddelivery.repository.RoleRepository;
 import com.kuch.Fooddelivery.repository.UserRepository;
 import com.kuch.Fooddelivery.service.UserService;
 import com.kuch.Fooddelivery.service.exception.UserNotFoundException;
 import com.kuch.Fooddelivery.utils.mappers.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,11 +31,27 @@ import java.util.Objects;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class UserServiceImpl implements UserService {
+@Transactional
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final InventoryRepository inventoryRepository;
+    private final PasswordEncoder passwordEncoder;
 
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(s).orElseThrow(UserNotFoundException::new);
+
+        log.info("User with email {} is found", user.getEmail());
+
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+        user.getRoles().forEach(role ->
+                authorities.add(new SimpleGrantedAuthority(role.getName())));
+
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+    }
 
     @Override
     public UserDto getUser(int userId) {
@@ -41,15 +67,14 @@ public class UserServiceImpl implements UserService {
         log.info("Getting all users");
         List<User> users = userRepository.findAll();
 
-        List<UserDto> userDtos = users.stream().map(UserMapper.INSTANCE::asUserDto).toList();
-
-        return userDtos;
+        return users.stream().map(UserMapper.INSTANCE::asUserDto).toList();
     }
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        User user = UserMapper.INSTANCE.asUser(userDto);
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
+        User user = UserMapper.INSTANCE.asUser(userDto);
         user = userRepository.save(user);
         log.info("User with id: {} created", user.getUserId());
 
@@ -95,6 +120,22 @@ public class UserServiceImpl implements UserService {
         log.info("User with {} id deleted", userId);
     }
 
+    @Override
+    public Role saveRole(Role role) {
+        log.info("Saving new role {} to the database", role.getName());
+        return roleRepository.save(role);
+    }
+
+
+    @Override
+    public void addRoleToUser(int userId, String roleName) {
+        log.info("Adding role {} to user with id: {} ");
+        User user = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+        Role role = roleRepository.findByName(roleName);
+        user.getRoles().add(role);
+    }
+
 
     /*
             Method just for implementation.
@@ -119,5 +160,4 @@ public class UserServiceImpl implements UserService {
             user.setPhone(phone);
 
     }
-
 }

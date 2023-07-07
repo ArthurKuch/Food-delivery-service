@@ -5,12 +5,15 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.kuch.Fooddelivery.dto.group.OnCreate;
 import com.kuch.Fooddelivery.dto.group.OnUpdate;
 import com.kuch.Fooddelivery.entity.Order;
+import com.kuch.Fooddelivery.entity.Role;
 import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -44,4 +47,5 @@ public class UserDto implements Serializable {
 
     private List<Order> order;
 
+    private Collection<Role> roles = new ArrayList<>();
 }
