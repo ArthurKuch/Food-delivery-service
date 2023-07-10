@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
@@ -31,6 +32,7 @@ import static org.mockito.Mockito.when;
  */
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 public class UserServiceTests {
 
     @Mock

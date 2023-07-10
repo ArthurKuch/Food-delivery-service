@@ -8,6 +8,7 @@ import com.kuch.Fooddelivery.controller.assembler.FoodAssembler;
 import com.kuch.Fooddelivery.controller.model.FoodModel;
 import com.kuch.Fooddelivery.dto.FoodDto;
 import com.kuch.Fooddelivery.service.FoodService;
+import com.kuch.Fooddelivery.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.when;
@@ -29,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 
 @WebMvcTest(controllers = FoodController.class)
+@ActiveProfiles("test")
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 @Import(TestConfig.class)
@@ -39,6 +42,9 @@ public class FoodControllerTests {
 
     @MockBean
     private FoodService foodService;
+
+    @MockBean
+    private UserService userService;
 
     @MockBean
     private FoodAssembler foodAssembler;
