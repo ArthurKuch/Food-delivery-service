@@ -48,6 +48,15 @@ public class UserController implements UserApi {
     }
 
     @Override
+    public UserModel addRoleToUser(int userId, String roleName) {
+        userService.addRoleToUser(userId, roleName);
+
+        UserDto userDto = userService.getUser(userId);
+
+        return userAssembler.toModel(userDto);
+    }
+
+    @Override
     public ResponseEntity<Void> deleteUser(int userId) {
         userService.deleteUser(userId);
         return ResponseEntity.noContent().build();

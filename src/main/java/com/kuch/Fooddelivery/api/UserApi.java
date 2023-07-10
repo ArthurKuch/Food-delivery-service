@@ -50,6 +50,15 @@ public interface UserApi {
             {
                     @ApiImplicitParam(name = "userId", paramType = "path", required = true, value = "User id")
             })
+    @ApiOperation("Add role to user")
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/{userId}")
+    UserModel addRoleToUser(@PathVariable int userId, @RequestBody String roleName);
+
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(name = "userId", paramType = "path", required = true, value = "User id")
+            })
     @ApiOperation("Delete user")
     @DeleteMapping("/{userId}")
     ResponseEntity<Void> deleteUser(@PathVariable int userId);

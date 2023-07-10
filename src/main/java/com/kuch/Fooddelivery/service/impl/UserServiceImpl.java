@@ -76,7 +76,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         User user = UserMapper.INSTANCE.asUser(userDto);
         user = userRepository.save(user);
-        log.info("User with id: {} created", user.getUserId());
 
         Inventory inventory = inventoryRepository.save(new Inventory());
 
@@ -88,8 +87,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         user = userRepository.save(user);
 
-        userDto.setId(user.getUserId());
-        return userDto;
+        log.info("User with id: {} created", user.getUserId());
+
+        //userDto.setId(user.getUserId());
+        return UserMapper.INSTANCE.asUserDto(user);
     }
 
     @Override
@@ -132,6 +133,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         log.info("Adding role {} to user with id: {} ");
         User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
+        roleName = roleName.replaceAll("^\"|\"$", "");
         Role role = roleRepository.findByName(roleName);
         user.getRoles().add(role);
     }
