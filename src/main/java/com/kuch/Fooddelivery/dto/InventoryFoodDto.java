@@ -23,6 +23,6 @@ public class InventoryFoodDto {
 
     private int quantity;
 
-    private FoodDto foodDto;
+//    private FoodDto foodDto;
 
 }

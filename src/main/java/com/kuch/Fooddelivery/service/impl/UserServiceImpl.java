@@ -63,6 +63,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public UserDto getUserByEmail(String email) {
+        log.info("Finding user by email {}", email);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(UserNotFoundException::new);
+        log.info("User with email {} is found", email);
+        return UserMapper.INSTANCE.asUserDto(user);
+    }
+
+    @Override
     public List<UserDto> getAllUsers() {
         log.info("Getting all users");
         List<User> users = userRepository.findAll();
@@ -79,7 +88,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         Inventory inventory = inventoryRepository.save(new Inventory());
 
-        inventory.setUser(user);
+//        inventory.setUser(user);
 
         log.info("Inventory with id: {} created", inventory.getInventoryId());
 

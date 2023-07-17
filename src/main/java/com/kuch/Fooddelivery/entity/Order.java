@@ -47,8 +47,5 @@ public class Order {
     @Column(name = "order_status")
     private OrderStatus status;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
 }

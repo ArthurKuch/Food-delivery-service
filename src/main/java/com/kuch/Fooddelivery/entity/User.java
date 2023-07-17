@@ -1,9 +1,6 @@
 package com.kuch.Fooddelivery.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +13,7 @@ import java.util.List;
  */
 
 @Data
+@ToString(exclude = {"inventory"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -37,7 +35,6 @@ public class User implements Serializable {
 
 
     @OneToMany(
-            mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )

@@ -1,9 +1,6 @@
 package com.kuch.Fooddelivery.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -20,13 +17,13 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "inventories")
+@ToString(exclude = {"user"})
 public class Inventory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "inventory_id")
     private int inventoryId;
-
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")

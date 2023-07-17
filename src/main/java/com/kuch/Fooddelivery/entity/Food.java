@@ -33,8 +33,4 @@ public class Food implements Serializable {
     @Column(name = "price")
     private double price;
 
-//    @Column(name = "quantity")
-//    private int quantity;
-
-
 }

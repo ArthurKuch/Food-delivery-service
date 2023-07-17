@@ -21,9 +21,11 @@ public interface InventoryFoodMapper {
 //    InventoryFoodDto asInventoryFoodDto(Food food);
 
 
+
     InventoryFoodDto asInventoryFoodDto(InventoryFood inventoryFood);
 
-    @Mapping(source = "foodId", target = "id")
+    @Mapping(source = "price", target = "price")
+    @Mapping(target = "food", ignore = true)
     InventoryFood asInventoryFood(Food food);
 
 }

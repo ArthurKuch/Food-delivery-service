@@ -5,7 +5,6 @@ import com.kuch.Fooddelivery.utils.filter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,7 +24,6 @@ import static org.springframework.http.HttpMethod.*;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@Profile(value = {"development", "production"})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
@@ -49,8 +47,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(POST, "/api/v1/**").hasAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers(GET, "/api/v1/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER");
         http.authorizeRequests().antMatchers(DELETE, "/api/v1/**").hasAuthority("ROLE_ADMIN");
-        http.authorizeRequests().antMatchers(PUT, "/api/v1/order/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER");
-        http.authorizeRequests().antMatchers(PUT, "/api/v1/inventory-items/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER");
+        http.authorizeRequests().antMatchers(PUT, "/api/v1/foods/**").hasAuthority("ROLE_ADMIN");
+//        http.authorizeRequests().antMatchers(PUT, "/api/v1/order/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER");
+//        http.authorizeRequests().antMatchers(PUT, "/api/v1/inventory-items/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

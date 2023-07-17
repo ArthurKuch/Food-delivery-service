@@ -12,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @Api(tags = "User management API")
@@ -63,5 +66,8 @@ public interface UserApi {
     @DeleteMapping("/{userId}")
     ResponseEntity<Void> deleteUser(@PathVariable int userId);
 
-
+    @ApiOperation("Refresh token")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/refreshToken")
+    ResponseEntity<Void> refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
 }

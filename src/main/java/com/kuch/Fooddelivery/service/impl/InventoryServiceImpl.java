@@ -52,6 +52,12 @@ public class InventoryServiceImpl implements InventoryService {
                         .orElseThrow(FoodNotFoundException::new);
 
         InventoryFood inventoryFood = InventoryFoodMapper.INSTANCE.asInventoryFood(food);
+
+        if(inventory.getUsersFood().contains(inventoryFood)){
+           inventory.setTotal (inventory.getTotal() - inventoryFood.getQuantity() * inventoryFood.getPrice());
+        }
+
+        inventoryFood.setFood(food);
         double total = inventory.getTotal() + (quantity * inventoryFood.getPrice());
 
         inventory.setTotal(total);
@@ -65,22 +71,18 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    @Transactional
     public InventoryDto removeFood(int inventoryId, int foodId) {
 
         Inventory inventory = getInventoryByInventoryId(inventoryId);
+        Food food = foodRepostiory.findById(foodId).orElseThrow(FoodNotFoundException::new);
 
-        Food food = foodRepostiory.findById(foodId)
-                .orElseThrow(FoodNotFoundException::new);
+        InventoryFood inventoryFood = inventoryFoodRepository.findInventoryFoodByFood(food);
 
-        InventoryFood inventoryFood = InventoryFoodMapper.INSTANCE.asInventoryFood(food);
 
-        double total = inventory.getTotal() + (inventoryFood.getQuantity() * inventoryFood.getPrice());
+        double total = inventory.getTotal() - (inventoryFood.getQuantity() * inventoryFood.getPrice());
         inventory.setTotal(total);
 
         inventory.getUsersFood().remove(inventoryFood);
-
-        inventoryFoodRepository.delete(inventoryFood);
         inventoryRepository.save(inventory);
 
         return InventoryMapper.INSTANCE.asInventoryDto(inventory);
@@ -91,6 +93,7 @@ public class InventoryServiceImpl implements InventoryService {
         Inventory inventory = getInventoryByInventoryId(inventoryId);
 
         inventory.getUsersFood().clear();
+        inventory.setTotal(0.0);
 
         inventoryRepository.save(inventory);
 

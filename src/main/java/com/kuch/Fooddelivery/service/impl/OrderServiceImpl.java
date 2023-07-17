@@ -4,6 +4,7 @@ import com.kuch.Fooddelivery.dto.OrderDto;
 import com.kuch.Fooddelivery.dto.OrderDtoResponse;
 import com.kuch.Fooddelivery.entity.Order;
 import com.kuch.Fooddelivery.entity.User;
+import com.kuch.Fooddelivery.entity.enumeration.OrderStatus;
 import com.kuch.Fooddelivery.repository.OrderRepository;
 import com.kuch.Fooddelivery.repository.UserRepository;
 import com.kuch.Fooddelivery.service.OrderService;
@@ -70,11 +71,11 @@ public class OrderServiceImpl implements OrderService {
         Order order = OrderMapper.INSTANCE.asOrder(orderDto);
         List<Order> orders = user.getOrder();
 
-        orders.add(order);
-        user.setOrder(orders);
-        order.setUser(user);
+        order.setStatus(OrderStatus.PENDING);
         order.setInventory(user.getInventory());
         order.setTotal(user.getInventory().getTotal());
+        orders.add(order);
+        user.setOrder(orders);
 
         order = orderRepository.save(order);
         userRepository.save(user);

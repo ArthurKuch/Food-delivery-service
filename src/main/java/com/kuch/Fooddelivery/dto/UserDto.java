@@ -6,7 +6,10 @@ import com.kuch.Fooddelivery.dto.group.OnCreate;
 import com.kuch.Fooddelivery.dto.group.OnUpdate;
 import com.kuch.Fooddelivery.entity.Order;
 import com.kuch.Fooddelivery.entity.Role;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

@@ -32,6 +32,4 @@ public class InventoryFood {
     @OneToOne
     private Food food;
 
-
-
 }
